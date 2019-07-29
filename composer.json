@@ -1,0 +1,33 @@
+{
+    "name": "afbora/kirby-loader",
+    "description": "Kirby plugins loader from multiple roots",
+    "keywords": [],
+    "version": "1.0",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmet Bora",
+            "email": "ahmet.bora@pixelturk.net"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "getkirby/composer-installer": "^1.1.4"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "files": [
+            "config.php"
+        ],
+        "psr-4": {
+            "Afbora\\Loader\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
