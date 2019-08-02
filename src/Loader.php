@@ -28,24 +28,29 @@ class Loader
         }
     }
 
-    protected function pluginsLoader(string $root): array
+    protected function pluginsLoader(string $root): void
     {
-        $loaded = [];
-        foreach (Dir::read($root) as $dirname) {
-            if (in_array(substr($dirname, 0, 1), ['.', '_']) === true) {
-                continue;
+        if ($this->readDir(basename($root), dirname($root)) === false) {
+            foreach (Dir::read($root) as $dirname) {
+                $this->readDir($dirname, $root);
             }
-            if (is_dir($root . '/' . $dirname) === false) {
-                continue;
-            }
-            $dir = $root . '/' . $dirname;
-            $entry = $dir . '/index.php';
-            if (file_exists($entry) === false) {
-                continue;
-            }
-            include_once $entry;
-            $loaded[] = $dir;
         }
-        return $loaded;
+    }
+
+    protected function readDir(string $dirname, string $root): bool
+    {
+        if (in_array(substr($dirname, 0, 1), ['.', '_']) === true) {
+            return false;
+        }
+        $dir = $root . DIRECTORY_SEPARATOR . $dirname;
+        if (is_dir($dir) === false) {
+            return false;
+        }
+        $entry = $dir . DIRECTORY_SEPARATOR . 'index.php';
+        if (file_exists($entry) === false) {
+            return false;
+        }
+        include_once $entry;
+        return true;
     }
 }
