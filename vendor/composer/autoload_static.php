@@ -6,10 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit3fb0a4d64201676d2dcd03e06dd74f70
 {
-    public static $files = array (
-        '412e4b389f65beea27bfc71fde38a046' => __DIR__ . '/../..' . '/config.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'K' => 
         array (

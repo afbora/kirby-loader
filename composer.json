@@ -2,7 +2,7 @@
     "name": "afbora/kirby-loader",
     "description": "Kirby plugins loader from multiple roots",
     "keywords": [],
-    "version": "1.1",
+    "version": "1.2.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -21,9 +21,6 @@
         "sort-packages": true
     },
     "autoload": {
-        "files": [
-            "config.php"
-        ],
         "psr-4": {
             "Afbora\\Loader\\": "src/"
         }

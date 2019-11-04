@@ -1,6 +1,6 @@
 # Kirby Loader
 
-With Kirby Loader you can load plugins from multiple roots. Thus, you can simplify the management of your plugins by grouping.
+The Kirby Loader allows you to install plugins from multiple root directories. You can easily manage plug-ins by grouping them.
 
 ## Installation
 
@@ -37,7 +37,7 @@ return [
 The default values of the package are:
 
 | Option | Default | Values | Description |
-|:--|:--|:--|:--|
+|:---|:---|:---|:---|
 | afbora.loader.roots | [] | (array) | Array with the roots |
 
 All the values can be updated in the `config.php` file.

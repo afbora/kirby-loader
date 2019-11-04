@@ -17,11 +17,13 @@ class Loader
     {
         if ($this->roots) {
             $index = kirby()->root('index');
+
             foreach ($this->roots as $root) {
                 if (is_string($root)) {
                     if (strpos($root, $index) === false) {
                         $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
                     }
+
                     $this->pluginsLoader($root);
                 }
             }
@@ -42,15 +44,19 @@ class Loader
         if (in_array(substr($dirname, 0, 1), ['.', '_']) === true) {
             return false;
         }
+
         $dir = $root . DIRECTORY_SEPARATOR . $dirname;
         if (is_dir($dir) === false) {
             return false;
         }
+
         $entry = $dir . DIRECTORY_SEPARATOR . 'index.php';
         if (file_exists($entry) === false) {
             return false;
         }
+
         include_once $entry;
+
         return true;
     }
 }
