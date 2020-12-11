@@ -15,11 +15,18 @@ class Loader
 
     public function register()
     {
-        if ($this->roots) {
-            $index = kirby()->root('index');
+        if (empty($this->roots) === false) {
+            $index = kirby()->root();
 
             foreach ($this->roots as $root) {
-                if (is_string($root)) {
+                if (is_string($root) === true) {
+                    if (strpos($root, $index) === false) {
+                        $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
+                    }
+
+                    $this->pluginsLoader($root);
+                } elseif (is_a($root, 'Closure') === true) {
+                    $root = $root();
                     if (strpos($root, $index) === false) {
                         $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
                     }

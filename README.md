@@ -23,10 +23,18 @@ git submodule add https://github.com/afbora/kirby-loader.git site/plugins/kirby-
 
 return [
     'afbora.loader.roots' => [
+        // register string paths
         '/plugins/core',
         '/plugins/payment',
         '/plugins/shipping',
-        '/theme', // Register single plugin
+        
+        // register single directory
+        '/theme',
+        
+        // register with callback
+        function () {
+            return option('custom.option.path');
+        },
     ]
 ];
 
