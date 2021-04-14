@@ -2,7 +2,7 @@
     "name": "afbora/kirby-loader",
     "description": "Kirby plugins loader from multiple roots",
     "keywords": [],
-    "version": "1.3.0",
+    "version": "1.4.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
