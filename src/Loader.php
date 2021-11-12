@@ -1,8 +1,9 @@
 <?php
 
-namespace Afbora\Loader;
+namespace Afbora;
 
-use Kirby\Toolkit\Dir;
+use Kirby\Filesystem\Dir;
+use Kirby\Filesystem\F;
 
 class Loader
 {
@@ -10,7 +11,7 @@ class Loader
 
     public function __construct()
     {
-        $this->roots = option('afbora.loader.roots');
+        $this->roots = option('afbora.loader.roots', []);
     }
 
     public function register()
@@ -58,11 +59,11 @@ class Loader
         }
 
         $entry = $dir . DIRECTORY_SEPARATOR . 'index.php';
-        if (file_exists($entry) === false) {
+        if (is_dir($dir) !== true || is_file($entry) !== true) {
             return false;
         }
 
-        include_once $entry;
+        F::loadOnce($entry);
 
         return true;
     }

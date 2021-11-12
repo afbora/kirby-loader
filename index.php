@@ -1,9 +1,11 @@
 <?php
 
-use Afbora\Loader\Loader;
+use Afbora\Loader;
 use Kirby\Cms\App as Kirby;
 
-@include_once __DIR__ . "/vendor/autoload.php";
+load([
+    'afbora\\loader' => __DIR__ . '/src/Loader.php',
+]);
 
 (new Loader())->register();
 
