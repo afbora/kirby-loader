@@ -14,57 +14,65 @@ class Loader
         $this->roots = option('afbora.loader.roots', []);
     }
 
-    public function register()
+    public function register(): void
     {
         if (empty($this->roots) === false) {
-            $index = kirby()->root();
-
             foreach ($this->roots as $root) {
                 if (is_string($root) === true) {
-                    if (strpos($root, $index) === false) {
-                        $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
-                    }
-
-                    $this->pluginsLoader($root);
+                    $root = $this->getRootPath($root);
                 } elseif (is_a($root, 'Closure') === true) {
-                    $root = $root();
-                    if (strpos($root, $index) === false) {
-                        $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
-                    }
-
-                    $this->pluginsLoader($root);
+                    $root = $this->getRootPath($root());
+                } else {
+                    // not supported type
+                    continue;
                 }
+
+                $this->pluginsLoader($root);
             }
         }
     }
 
     protected function pluginsLoader(string $root): void
     {
-        if ($this->readDir(basename($root), dirname($root)) === false) {
-            foreach (Dir::read($root) as $dirname) {
-                $this->readDir($dirname, $root);
+        // check and register directly plugin directory
+        $singlePluginRegister = $this->readDir($root);
+
+        // read directory and register all plugins in given path
+        if ($singlePluginRegister === false) {
+            foreach (Dir::read($root, null, true) as $path) {
+                $this->readDir($path);
             }
         }
     }
 
-    protected function readDir(string $dirname, string $root): bool
+    protected function readDir(string $root = null): bool
     {
-        if (in_array(substr($dirname, 0, 1), ['.', '_']) === true) {
+        if (empty($root) === true|| in_array(substr(basename($root), 0, 1), ['.', '..']) === true) {
             return false;
         }
 
-        $dir = $root . DIRECTORY_SEPARATOR . $dirname;
-        if (is_dir($dir) === false) {
+        if (is_dir($root) === false) {
             return false;
         }
 
-        $entry = $dir . DIRECTORY_SEPARATOR . 'index.php';
-        if (is_dir($dir) !== true || is_file($entry) !== true) {
+        $entry = $root . DIRECTORY_SEPARATOR . 'index.php';
+        if (is_dir($root) === false || is_file($entry) === false) {
             return false;
         }
 
         F::loadOnce($entry);
 
         return true;
+    }
+
+    protected function getRootPath(string $root = null): string
+    {
+        $index = kirby()->root();
+
+        if (is_dir($root) === false && strpos($root, $index) === false) {
+            $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
+        }
+
+        return $root;
     }
 }
