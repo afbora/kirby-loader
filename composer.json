@@ -1,14 +1,19 @@
 {
   "name": "afbora/kirby-loader",
-  "description": "Kirby plugins loader from multiple roots",
+  "description": "Plugins loader from multiple roots for Kirby 3.",
   "keywords": [],
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "kirby-plugin",
   "license": "MIT",
+  "homepage": "https://github.com/afbora/kirby-loader",
+  "support": {
+    "email": "ahmet@getkirby.com"
+  },
   "authors": [
     {
       "name": "Ahmet Bora",
-      "email": "ahmet@getkirby.com"
+      "email": "ahmet@getkirby.com",
+      "homepage": "https://github.com/afbora/kirby-loader"
     }
   ],
   "require": {
