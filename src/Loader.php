@@ -2,6 +2,7 @@
 
 namespace Afbora;
 
+use Kirby\Cms\App;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
 
@@ -55,12 +56,20 @@ class Loader
             return false;
         }
 
+        $dirname = basename($root);
+
         $entry = $root . DIRECTORY_SEPARATOR . 'index.php';
-        if (is_dir($root) === false || is_file($entry) === false) {
+        $script = $root . DIRECTORY_SEPARATOR . 'index.js';
+        $styles = $root . DIRECTORY_SEPARATOR . 'index.css';
+
+        if (is_dir($root) === true && is_file($entry) === true) {
+            F::loadOnce($entry, false);
+        } elseif (is_file($script) === true || is_file($styles) === true) {
+            App::plugin('plugins/' . $dirname, ['root' => $root]);
+        } else {
             return false;
         }
 
-        F::loadOnce($entry);
 
         return true;
     }
