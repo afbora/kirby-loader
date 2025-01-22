@@ -1,8 +1,12 @@
 {
   "name": "afbora/kirby-loader",
   "description": "Plugins loader from multiple roots for Kirby",
-  "keywords": [],
-  "version": "2.2.0",
+  "keywords": [
+    "kirby3",
+    "kirby4",
+    "kirby5"
+  ],
+  "version": "2.3.0",
   "type": "kirby-plugin",
   "license": "MIT",
   "homepage": "https://github.com/afbora/kirby-loader",

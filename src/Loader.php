@@ -46,9 +46,12 @@ class Loader
         }
     }
 
-    protected function readDir(string $root = null): bool
+    protected function readDir(?string $root = null): bool
     {
-        if (empty($root) === true|| in_array(substr(basename($root), 0, 1), ['.', '..']) === true) {
+        if (
+            $root === null ||
+            in_array(substr(basename($root), 0, 1), ['.', '..']) === true
+        ) {
             return false;
         }
 
@@ -58,7 +61,7 @@ class Loader
 
         $dirname = basename($root);
 
-        $entry = $root . DIRECTORY_SEPARATOR . 'index.php';
+        $entry  = $root . DIRECTORY_SEPARATOR . 'index.php';
         $script = $root . DIRECTORY_SEPARATOR . 'index.js';
         $styles = $root . DIRECTORY_SEPARATOR . 'index.css';
 
@@ -74,14 +77,18 @@ class Loader
         return true;
     }
 
-    protected function getRootPath(string $root = null): string
+    protected function getRootPath(?string $root = null): string
     {
-        $index = kirby()->root();
+        $baseRoot = App::instance()->root();
 
-        if (is_dir($root) === false && strpos($root, $index) === false) {
-            $root = $index . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
+        if (
+            $root !== null &&
+            is_dir($root) === false &&
+            strpos($root, $baseRoot) === false
+        ) {
+            return $baseRoot . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
         }
 
-        return $root;
+        return $baseRoot;
     }
 }
