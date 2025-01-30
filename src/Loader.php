@@ -17,19 +17,17 @@ class Loader
 
     public function register(): void
     {
-        if (empty($this->roots) === false) {
-            foreach ($this->roots as $root) {
-                if (is_string($root) === true) {
-                    $root = $this->getRootPath($root);
-                } elseif (is_a($root, 'Closure') === true) {
-                    $root = $this->getRootPath($root());
-                } else {
-                    // not supported type
-                    continue;
-                }
-
-                $this->pluginsLoader($root);
+        foreach ($this->roots as $root) {
+            if (is_string($root) === true) {
+                $root = $this->getRootPath($root);
+            } elseif (is_a($root, 'Closure') === true) {
+                $root = $this->getRootPath($root());
+            } else {
+                // not supported type
+                continue;
             }
+
+            $this->pluginsLoader($root);
         }
     }
 
@@ -77,18 +75,17 @@ class Loader
         return true;
     }
 
-    protected function getRootPath(?string $root = null): string
+    protected function getRootPath(string $root): string
     {
         $baseRoot = App::instance()->root();
 
         if (
-            $root !== null &&
             is_dir($root) === false &&
             strpos($root, $baseRoot) === false
         ) {
             return $baseRoot . DIRECTORY_SEPARATOR . ltrim($root, DIRECTORY_SEPARATOR);
         }
 
-        return $baseRoot;
+        return $root;
     }
 }
